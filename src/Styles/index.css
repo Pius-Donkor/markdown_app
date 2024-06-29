@@ -30,6 +30,17 @@
   /* --color-white-100: #1d1f22;
   --color-white-0: #151619;
   --color-dark-300: #c1c4cb; */
+
+  /* topography */
+  --roboto-slap: "Roboto ", sans-serif;
+  --roboto-regular: "Roboto Slap", sans-serif;
+  --text-bold: 700;
+  --roboto-mono: "Roboto Mono", monospace;
+  --line-height: 24px;
+  --char-spacing: 2px;
+  --font-size-small: 14px;
+  --font-size-medium: 15px;
+  --font-size-light: 13px;
 }
 button {
   cursor: pointer;
@@ -70,7 +81,7 @@ h6 {
   font-family: "Roboto", sans-serif;
 }
 .heading-small {
-  font-size: 114px;
+  font-size: 14px;
   font-family: "Roboto", sans-serif;
   letter-spacing: 2px;
 }

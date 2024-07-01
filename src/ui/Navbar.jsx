@@ -1,69 +1,114 @@
 import React from "react";
 import styled from "styled-components";
+import Icon from "./Icon";
+import DocumentInput from "./DocumentInput";
 
+// navbar
 const StyledNavbar = styled.nav`
-  background-color: #333;
-  color: white;
-  padding: 10px;
+  background-color: var(--color-dark-200);
   display: flex;
+  padding-right: 10px;
   justify-content: space-between;
   align-items: center;
   transition: margin-left 0.3s ease;
+  width: 100vw;
   margin-left: ${({ shifted }) => (shifted ? "250px" : "0")};
 `;
 
+// image tag for  the icons
+const OpenCloseIcon = styled.img`
+  width: ${({ open }) => (open ? "30px" : "25px")};
+`;
+
+// markdown heading
+const StyledHeading = styled.span`
+  color: var(--color-white-0);
+  letter-spacing: var(--char-spacing);
+  font-size: var(--font-size-small);
+  text-transform: uppercase;
+  font-weight: var(--text-bold);
+`;
+
 const Button = styled.button`
-  background-color: #007bff;
-  color: white;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-left: 5px;
+  background-color: var(--color-orange-0);
+  padding: 8px;
+  transition: background-color 0.3s ease;
+  font-size: var(--font-size-medium);
+  color: var(--color-white-0);
+  text-transform: capitalize;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
   &:hover {
-    background-color: #0056b3;
+    background-color: var(--color-orange-100);
   }
+`;
+
+// button for containing icons
+const ButtonIcon = styled.button`
+  background-color: var(--color-dark-300);
+  height: 4rem;
+  width: 4.5rem;
+  border: none;
+  cursor: pointer;
+`;
+
+const SubContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: fit-content;
 `;
 
 export default function Navbar({
   sidebarVisible,
   currentDocument,
   setSidebarVisible,
-  setDocuments,
-  saveToLocalStorage,
-  documents,
-  input,
-  setCurrentDocument,
+  handleDelete,
+  handleSave,
+  handleNameChange,
 }) {
-  const handleSave = () => {
-    if (currentDocument) {
-      const updatedDocuments = documents.map((doc) =>
-        doc === currentDocument ? { ...currentDocument, content: input } : doc
-      );
-      setDocuments(updatedDocuments);
-      saveToLocalStorage(updatedDocuments);
-    }
-  };
-  const handleDelete = () => {
-    const updatedDocuments = documents.filter((doc) => doc !== currentDocument);
-    setDocuments(updatedDocuments);
-    saveToLocalStorage(updatedDocuments);
-    setCurrentDocument(null);
-  };
+  console.log(sidebarVisible);
   return (
     <StyledNavbar shifted={sidebarVisible}>
-      <span>Markdown Editor</span>
-      {currentDocument && <span>Current Document: {currentDocument.name}</span>}
+      <SubContainer>
+        <ButtonIcon onClick={() => setSidebarVisible(!sidebarVisible)}>
+          {sidebarVisible ? (
+            <OpenCloseIcon
+              src="/public/assets/icon-close.svg"
+              alt="OpenCloseIcon"
+            />
+          ) : (
+            <OpenCloseIcon
+              src="/assets/icon-menu.svg"
+              alt="OpenCloseIcon"
+              open
+            />
+          )}
+        </ButtonIcon>
+        <StyledHeading>Markdown</StyledHeading>
+        {currentDocument && (
+          <DocumentInput
+            currentDocument={currentDocument}
+            handleNameChange={handleNameChange}
+          />
+        )}
+      </SubContainer>
+
       <div>
         {currentDocument && (
-          <>
-            <Button onClick={handleSave}>Save</Button>
-            <Button onClick={handleDelete}>Delete</Button>
-          </>
+          <SubContainer>
+            <Icon
+              style={{ color: "var(--color-grey-300)" }}
+              src="/public/assets/icon-delete.svg"
+              onClick={handleDelete}
+            />
+            <Button onClick={handleSave}>
+              <Icon src="/public//assets/icon-save.svg" /> Save change
+            </Button>
+          </SubContainer>
         )}
-        <Button onClick={() => setSidebarVisible(!sidebarVisible)}>
-          Toggle Sidebar
-        </Button>
       </div>
     </StyledNavbar>
   );

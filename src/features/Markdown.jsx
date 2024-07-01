@@ -1,11 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-const DocumentName = styled.input`
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-`;
-
 const EditorSection = styled.div`
   width: 50%;
   padding: 20px;
@@ -17,19 +11,9 @@ const Editor = styled.textarea`
   height: calc(100% - 60px);
 `;
 
-export default function Markdown({
-  currentDocument,
-  handleNameChange,
-  input,
-  setInput,
-}) {
+export default function Markdown({ input, setInput }) {
   return (
     <EditorSection>
-      <DocumentName
-        type="text"
-        value={currentDocument.name}
-        onChange={handleNameChange}
-      />
       <Editor value={input} onChange={(e) => setInput(e.target.value)} />
     </EditorSection>
   );

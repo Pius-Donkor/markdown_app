@@ -8,6 +8,8 @@ const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
 `;
 
 const MainContent = styled.div`
@@ -41,7 +43,36 @@ const App = () => {
   const saveToLocalStorage = (docs) => {
     localStorage.setItem("markdown-documents", JSON.stringify(docs));
   };
+  const handleSave = () => {
+    if (currentDocument) {
+      const updatedDocuments = documents.map((doc) =>
+        doc === currentDocument ? { ...currentDocument, content: input } : doc
+      );
+      setDocuments(updatedDocuments);
+      saveToLocalStorage(updatedDocuments);
+    }
+  };
+  const handleDelete = () => {
+    const updatedDocuments = documents.filter((doc) => doc !== currentDocument);
+    setDocuments(updatedDocuments);
+    saveToLocalStorage(updatedDocuments);
+    setCurrentDocument(null);
+  };
+  const handleCreate = () => {
+    const newDocument = {
+      createdAt: new Date().toLocaleDateString(),
+      name: "untitled-document.md",
+      content: "",
+    };
+    setDocuments([...documents, newDocument]);
+    saveToLocalStorage([...documents, newDocument]);
+    setCurrentDocument(newDocument);
+  };
 
+  const handleSelectDocument = (doc) => {
+    setCurrentDocument(doc);
+    setSidebarVisible(false);
+  };
   const handleNameChange = (event) => {
     if (currentDocument) {
       const updatedDocument = { ...currentDocument, name: event.target.value };
@@ -58,27 +89,23 @@ const App = () => {
     <AppContainer>
       <Navbar
         currentDocument={currentDocument}
-        documents={documents}
-        input={input}
-        saveToLocalStorage={saveToLocalStorage}
-        setCurrentDocument={setCurrentDocument}
-        setDocuments={setDocuments}
+        handleDelete={handleDelete}
+        handleSave={handleSave}
         setSidebarVisible={setSidebarVisible}
         sidebarVisible={sidebarVisible}
+        handleNameChange={handleNameChange}
       />
       <Sidebar
         documents={documents}
-        saveToLocalStorage={saveToLocalStorage}
-        setCurrentDocument={setCurrentDocument}
-        setDocuments={setDocuments}
         sidebarVisible={sidebarVisible}
-        setSidebarVisible={setSidebarVisible}
+        handleCreate={handleCreate}
+        handleSelectDocument={handleSelectDocument}
       />
+
       <MainContent shifted={sidebarVisible}>
         {currentDocument && (
           <Markdown
             currentDocument={currentDocument}
-            handleNameChange={handleNameChange}
             input={input}
             setInput={setInput}
           />

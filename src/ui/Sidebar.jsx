@@ -40,28 +40,10 @@ const Button = styled.button`
 `;
 export default function Sidebar({
   documents,
-  setCurrentDocument,
-  setSidebarVisible,
-  setDocuments,
   sidebarVisible,
-  saveToLocalStorage,
+  handleCreate,
+  handleSelectDocument,
 }) {
-  const handleCreate = () => {
-    const newDocument = {
-      createdAt: new Date().toLocaleDateString(),
-      name: "untitled-document.md",
-      content: "",
-    };
-    setDocuments([...documents, newDocument]);
-    saveToLocalStorage([...documents, newDocument]);
-    setCurrentDocument(newDocument);
-  };
-
-  const handleSelectDocument = (doc) => {
-    setCurrentDocument(doc);
-    setSidebarVisible(false);
-  };
-
   return (
     <StyledSidebar visible={sidebarVisible}>
       <Button onClick={handleCreate}>New Document</Button>

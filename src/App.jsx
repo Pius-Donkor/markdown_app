@@ -3,6 +3,8 @@ import styled from "styled-components";
 import Navbar from "./ui/Navbar";
 import Sidebar from "./ui/Sidebar";
 import Markdown from "./features/Markdown";
+import { formatDate } from "./utils/helper";
+import Preview from "./features/Preview";
 
 const AppContainer = styled.div`
   display: flex;
@@ -60,7 +62,7 @@ const App = () => {
   };
   const handleCreate = () => {
     const newDocument = {
-      createdAt: new Date().toLocaleDateString(),
+      createdAt: formatDate(),
       name: "untitled-document.md",
       content: "",
     };
@@ -110,6 +112,7 @@ const App = () => {
             setInput={setInput}
           />
         )}
+        <Preview input={input} />
       </MainContent>
     </AppContainer>
   );

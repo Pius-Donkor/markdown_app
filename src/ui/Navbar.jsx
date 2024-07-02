@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Icon from "./Icon";
 import DocumentInput from "./DocumentInput";
+import Button from "./Button";
 
 // navbar
 const StyledNavbar = styled.nav`
@@ -27,22 +28,6 @@ const StyledHeading = styled.span`
   font-size: var(--font-size-small);
   text-transform: uppercase;
   font-weight: var(--text-bold);
-`;
-
-const Button = styled.button`
-  background-color: var(--color-orange-0);
-  padding: 8px;
-  transition: background-color 0.3s ease;
-  font-size: var(--font-size-medium);
-  color: var(--color-white-0);
-  text-transform: capitalize;
-  border-radius: 3px;
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  &:hover {
-    background-color: var(--color-orange-100);
-  }
 `;
 
 // button for containing icons

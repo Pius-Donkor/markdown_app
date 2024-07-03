@@ -79,6 +79,11 @@ h6 {
   font-size: 14px;
   color: var(--color-orange-0);
 }
+p {
+  word-wrap: break-word;
+  white-space: normal;
+  overflow: hidden;
+}
 /* .heading-medium {
   font-size: 15px;
   font-family: "Roboto", sans-serif;

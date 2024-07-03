@@ -15,8 +15,8 @@ const AppContainer = styled.div`
 `;
 
 const MainContent = styled.div`
+  width: 100vw;
   display: flex;
-  flex-grow: 1;
   margin-left: ${({ shifted }) => (shifted ? "250px" : "0")};
   transition: margin-left 0.3s ease;
   overflow: hidden;
@@ -27,6 +27,7 @@ const App = () => {
   const [documents, setDocuments] = useState([]);
   const [currentDocument, setCurrentDocument] = useState(null);
   const [sidebarVisible, setSidebarVisible] = useState(false);
+  const [fullPreview, setFullPreview] = useState(false);
 
   useEffect(() => {
     const savedDocuments =
@@ -110,9 +111,14 @@ const App = () => {
             currentDocument={currentDocument}
             input={input}
             setInput={setInput}
+            fullPreview={fullPreview}
           />
         )}
-        <Preview input={input} />
+        <Preview
+          input={input}
+          setFullPreview={setFullPreview}
+          fullPreview={fullPreview}
+        />
       </MainContent>
     </AppContainer>
   );
